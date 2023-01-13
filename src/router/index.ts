@@ -33,9 +33,6 @@ const routes: Array<RouteRecordRaw> = [
     path: '/Overview',
     name: 'Overview',
     component: Overview,
-    meta: {
-      guard: 'auth',
-    },
   },
   {
     path: '/',

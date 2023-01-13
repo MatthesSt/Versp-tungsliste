@@ -37,6 +37,10 @@ export async function createEntry(time: string, date: string) {
   await setDoc(doc(getFirestore(), 'timestamps', docId), { event });
 }
 
+export async function updateEntry(id: string, event: CalendarEvent) {
+  await updateDoc(doc(getFirestore(), 'timestamps', id), { event });
+}
+
 export async function getEntries(): Promise<CalendarEvent[]> {
   const querySnapshot = await getDocs(collection(getFirestore(), 'timestamps'));
   const events: CalendarEvent[] = [];
