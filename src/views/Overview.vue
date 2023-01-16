@@ -86,8 +86,8 @@ function getGroup(e: any) {
   const time = start.split(' ')[1];
   const hours = time.split(':')[0];
   const minutes = time.split(':')[1];
-  if (hours < '09') return 1;
-  if (hours < '10' && minutes < '30') return 2;
+  if (hours < '09' || (hours == '09' && minutes == '00')) return 1;
+  if (hours == '09' && minutes < '31') return 2;
   return 3;
 }
 

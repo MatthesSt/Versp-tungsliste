@@ -2,8 +2,8 @@
   <div class="bg-dark d-flex flex-column justify-content-center align-items-center" style="height: 92vh">
     <div class="card w-25">
       <div class="card-body p-4">
-        <TimeInput placeholder="Ankunftszeit" v-model="time"></TimeInput>
-        <DateInput class="mb-2" placeholder="Tag" v-model="date"></DateInput>
+        <TimeInput placeholder="Ankunftszeit" v-model="time" :auto-fill="true"></TimeInput>
+        <DateInput class="mb-2" placeholder="Tag" v-model="date" :auto-fill="true"></DateInput>
         <Message v-model:success="success" v-model:error="error"></Message>
       </div>
       <div class="card-footer d-flex justify-content-end">
