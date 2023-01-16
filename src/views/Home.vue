@@ -1,6 +1,11 @@
 <template>
   <div class="bg-dark d-flex flex-column justify-content-center align-items-center" style="height: 92vh">
     <div class="card w-25">
+      <div class="card-header">
+        <div>Preis pro Stunde: {{ Math.floor(strikes / 3) }}</div>
+        <div>Striche: {{ strikes % 3 }}</div>
+        <div></div>
+      </div>
       <div class="card-body p-4">
         <TimeInput placeholder="Ankunftszeit" v-model="time" :auto-fill="true"></TimeInput>
         <DateInput class="mb-2" placeholder="Tag" v-model="date" :auto-fill="true"></DateInput>
@@ -21,14 +26,43 @@ const time = ref('');
 const date = ref('');
 const success = ref('');
 const error = ref('');
+const strikes = ref(0);
+const miracles = ref(0);
+const priceToPay = ref(0);
+
+async function init() {
+  const stats = await API.getStats();
+  if (stats) {
+    strikes.value = stats.strikes;
+    miracles.value = stats.miracles;
+  }
+}
+init();
 
 async function submit() {
+  const hours = time.value.split(':')[0];
+  const minutes = time.value.split(':')[1];
+  if (+hours - 9 > 0 || (+hours - 9 === 0 && +minutes > 30)) {
+    strikes.value++;
+    miracles.value = 0;
+    priceToPay.value = Math.floor(strikes.value / 3) * (+hours - 9 + 1);
+  }
+  if (+hours - 9 < 0 || (+hours - 9 === 0 && +minutes === 0)) {
+    miracles.value++;
+    if (miracles.value === 3) {
+      strikes.value -= 3;
+      miracles.value = 0;
+    }
+  }
   try {
-    await API.createEntry(time.value, date.value);
-    success.value = 'Erfolgreich gespeichert';
+    await API.createEntry(time.value, date.value, priceToPay.value);
+    await API.updateStats(strikes.value, miracles.value);
+    success.value = priceToPay.value ? `zu zahlen: ${priceToPay.value}` : 'Erfolgreich gespeichert';
   } catch (e) {
     console.error(e);
     error.value = 'Fehler beim Speichern';
+  } finally {
+    priceToPay.value = 0;
   }
 }
 </script>
