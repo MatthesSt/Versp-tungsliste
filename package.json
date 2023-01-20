@@ -16,7 +16,9 @@
     "custom-mbd-components": "github:MBD-Team/CustomMBDComponents",
     "firebase": "^9.15.0",
     "luxon": "^3.0.1",
+    "register-service-worker": "^1.7.2",
     "sass": "^1.57.1",
+    "vite-plugin-pwa": "^0.14.1",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",
     "vue3-touch-events": "^4.1.0"
