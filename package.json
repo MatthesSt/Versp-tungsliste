@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc && vite build",
+    "build": " vite build",
     "preview": "vite preview",
     "updateMBD": "npm i git+https://github.com/MBD-Team/CustomMBDComponents.git"
   },

@@ -61,13 +61,7 @@ export async function updateStats(strikes: number, miracles: number) {
 export async function getStats() {
   const user = currentUser.value;
   if (user) {
-    const docRef = doc(getFirestore(), 'stats', user.uid);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      return docSnap.data();
-    } else {
-      await setDoc(docRef, { strikes: 0, miracles: 0 });
-      return { strikes: 0, miracles: 0 };
-    }
+    const docSnap = await getDoc(doc(getFirestore(), 'stats', user.uid));
+    return docSnap.data();
   }
 }
