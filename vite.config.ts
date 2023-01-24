@@ -1,4 +1,3 @@
-/// <reference types="vitest" />
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -24,15 +23,19 @@ export default defineConfig({
         theme_color: '#7E1F86',
         name: 'Verspätungsliste',
         short_name: 'Vl',
-        start_url: '/',
+        start_url: '/Versp-tungsliste/',
         display: 'standalone',
+        icons: [
+          {
+            src: 'calendar-outline-filled.png',
+            sizes: '256x256',
+            type: 'image/png',
+            purpose: 'any',
+          },
+        ],
       },
     }),
   ],
-  test: {
-    globals: true,
-    environment: 'jsdom',
-  },
   server: {
     host: true,
   },

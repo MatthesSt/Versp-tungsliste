@@ -1,1 +1,1 @@
-{"name":"Verspätungsliste","short_name":"Vl","start_url":"/","display":"standalone","background_color":"#000000","lang":"en","scope":"./","theme_color":"#7E1F86"}
+{"name":"Verspätungsliste","short_name":"Vl","start_url":"/Versp-tungsliste/","display":"standalone","background_color":"#000000","lang":"en","scope":"./","theme_color":"#7E1F86","icons":[{"src":"calendar-outline-filled.png","sizes":"256x256","type":"image/png","purpose":"any"}]}
