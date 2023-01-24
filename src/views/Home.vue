@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-dark d-flex flex-column justify-content-center align-items-center" style="height: 92vh">
-    <div class="card w-25">
+  <div class="bg-dark d-flex flex-column justify-content-center align-items-center px-2" style="height: 92vh">
+    <div class="card w-md-25 w-100">
       <div class="card-header">
         <div>Preis pro Stunde: {{ Math.floor(strikes / 3) }}</div>
         <div>Striche: {{ strikes % 3 }}</div>
