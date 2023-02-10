@@ -47,6 +47,9 @@ async function submit() {
     miracles.value = 0;
     priceToPay.value = Math.floor(strikes.value / 3) * (+hours - 9 + 1);
   }
+  if (+hours == 9 && +minutes && +minutes <= 30) {
+    miracles.value = 0;
+  }
   if (+hours - 9 < 0 || (+hours - 9 === 0 && +minutes === 0)) {
     miracles.value++;
     if (miracles.value === 3) {
