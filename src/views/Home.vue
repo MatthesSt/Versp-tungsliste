@@ -12,7 +12,9 @@
         <Message v-model:success="success" v-model:error="error"></Message>
       </div>
       <div class="card-footer d-flex justify-content-end">
-        <Button class="btn btn-secondary" @click.stop="submit()">speichern</Button>
+        <Button class="btn btn-secondary" @click.stop="submit()" :disabled="!!(events || []).find(e => e.start.split(' ')[0] == date)">
+          speichern
+        </Button>
       </div>
     </div>
   </div>
@@ -30,7 +32,10 @@ const strikes = ref(0);
 const miracles = ref(0);
 const priceToPay = ref(0);
 
+const events = ref<{ start: string; priceToPay: number; id: string }[]>();
+
 async function init() {
+  events.value = (await API.getEntries()) as unknown as { start: string; priceToPay: number; id: string }[];
   const stats = await API.getStats();
   if (stats) {
     strikes.value = stats.strikes;
