@@ -82,20 +82,22 @@ getEntries();
 
 function getGroup(e: any) {
   const start = e.start;
-  const date = start.split(' ')[0];
-  const time = start.split(' ')[1];
-  const hours = time.split(':')[0];
-  const minutes = time.split(':')[1];
+  let [date, time] = start.split(' ');
+  let [year, month, day] = date.split('-');
+  let [hours, minutes] = time.split(':');
   if (hours < '09' || (hours == '09' && minutes == '00')) return 1;
-  if (hours == '09' && minutes < '31') return 2;
+  if (year == 2023 && hours == '09') {
+    if (month < 3 && minutes <= '30') return 2;
+    if (month == 3 && minutes <= '25') return 2;
+    if (month == 4 && minutes <= '15') return 2;
+  }
+  if (hours == '09' && month > 4 && minutes <= '05') return 2;
   return 3;
 }
 
 function getEndTime(start: string) {
-  const date = start.split(' ')[0];
-  const time = start.split(' ')[1];
-  const hours = time.split(':')[0];
-  const minutes = time.split(':')[1];
+  const [date, time] = start.split(' ');
+  const [hours, minutes] = time.split(':');
   return `${date} ${hours}:${+minutes + 15}:00`;
 }
 </script>

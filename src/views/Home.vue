@@ -10,6 +10,7 @@
         <TimeInput placeholder="Ankunftszeit" v-model="time" :auto-fill="true"></TimeInput>
         <DateInput class="mb-2" placeholder="Tag" v-model="date" :auto-fill="true"></DateInput>
         <Message v-model:success="success" v-model:error="error"></Message>
+        {{ date }}
       </div>
       <div class="card-footer d-flex justify-content-end">
         <Button class="btn btn-secondary" @click.stop="submit()" :disabled="!!(events || []).find(e => e.start.split(' ')[0] == date)">
@@ -44,21 +45,31 @@ async function init() {
 }
 init();
 
+function strike(hours: number = 9) {
+  strikes.value++;
+  miracles.value = 0;
+  priceToPay.value = Math.floor(strikes.value / 3) * (+hours - 9 + 1);
+}
+
 async function submit() {
-  const hours = time.value.split(':')[0];
-  const minutes = time.value.split(':')[1];
-  if (+hours - 9 > 0 || (+hours - 9 === 0 && +minutes > 30)) {
-    strikes.value++;
-    miracles.value = 0;
-    priceToPay.value = Math.floor(strikes.value / 3) * (+hours - 9 + 1);
+  let [hours, minutes] = time.value.split(':');
+  let [year, month, day] = date.value.split('-');
+  if (+hours - 9 > 0) {
+    strike(+hours);
   }
-  if (+hours == 9 && +minutes && +minutes <= 30) {
+  if (+hours - 9 === 0) {
+    if (+year == 2023 && +month < 3 && minutes > '30') strike();
+    if (+year == 2023 && +month == 3 && minutes > '25') strike();
+    if (+year == 2023 && +month == 4 && minutes > '15') strike();
+    if (+month > 4 && minutes > '05') strike();
+  }
+  if (+hours == 9 && +minutes) {
     miracles.value = 0;
   }
   if (+hours - 9 < 0 || (+hours - 9 === 0 && +minutes === 0)) {
     miracles.value++;
     if (miracles.value === 3) {
-      strikes.value -= 3;
+      strikes.value > 3 ? (strikes.value -= 3) : (strikes.value = 0);
       miracles.value = 0;
     }
   }
